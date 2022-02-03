@@ -1,0 +1,318 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Bike form',
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      home: MyCustomForm(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+
+
+// Create a Form widget.
+class MyCustomForm extends StatefulWidget {
+  @override
+  MyCustomFormState createState() {
+    return MyCustomFormState();
+  }
+}
+// Create a corresponding State class. This class holds data related to the form.
+class MyCustomFormState extends State<MyCustomForm> {
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
+  final _formKey = GlobalKey<FormState>();
+  String? _valScroll;
+  // String _valPolicyExpiry;
+  //     List _valScroll = [];
+  List _policyexpiryList = [
+    "Not Yet expired",
+    "Expired within 90 days",
+    "Expired more than 90 days",
+  ];
+  String? _Expiry;
+  List _List1 = [ "Not yet expired","Expired within 90 days","Expired more than 90 days"];
+  String? _Model;
+  List _List2 = [ "Ashok Leyland","TATA"];
+  String? _Fuel;
+  List _List3 = [ "Diesel","Petrol"];
+  String? _Varient;
+  List _List4 = [ "LE7S,1461CC","LE8S,1461CC","LS7S,1461CC"];
+  String? _Insurer;
+  List _List5 = [ "Acko General","Bajaj Allianz","Bharti Exa"];
+  String? _Claimed;
+  List _List6 = [ "No","Yes"];
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    // Build a Form widget using the _formKey created above.
+    return Scaffold(
+      body: SingleChildScrollView(
+        child:
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Form(
+              key: _formKey,
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left:10.0),
+
+                      child: Container(child: Text("Driven to help you find",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w400,color: const Color(0xffFE8135)),)),
+                    ),
+                    SizedBox(height: 8,),
+                    Container(child: Text("Better Plans",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: const Color(0xffFE8135)),)),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Expanded(
+                          child: TextFormField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(15),
+                              floatingLabelBehavior: FloatingLabelBehavior.never,
+                              border: OutlineInputBorder(),
+                              labelText: 'WR14SG1111',labelStyle:TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+                              //   prefixIcon: Image.asset(
+                              //       'assets/image/india2.png', height: 50, width: 50),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 10,),
+
+                    DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                      hint: Text("Policy Expiry"),
+                      value: _Expiry,
+                      items: _List1.map((value) {
+                        return DropdownMenuItem<String>(
+                          child: Text(value,style: TextStyle(color: Color(0xff73737F)),),
+                          value: value,
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _Expiry = value!;
+                        });
+                      },
+                    ),
+                    SizedBox(height: 10,),
+                    Row(
+                      children: [
+                        // Expanded(
+                        //   child: DropdownButtonFormField<String>(
+                        //     decoration: InputDecoration(
+                        //       border: OutlineInputBorder(),
+                        //
+                        //     ),
+                        //     hint: Text("Fuel Type"),
+                        //     value: _Fuel,
+                        //     items: _List3.map((value) {
+                        //       return DropdownMenuItem<String>(
+                        //         child: Text(value,style: TextStyle(color: Color(0xff73737F)),),
+                        //         value: value,
+                        //       );
+                        //     }).toList(),
+                        //     onChanged: (String? value) {
+                        //       setState(() {
+                        //         _Fuel = value!;
+                        //       });
+                        //     },
+                        //   ),
+                        // ),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            hint: Text("Make & Model"),
+                            value: _Model,
+                            items: _List2.map((value) {
+                              return DropdownMenuItem<String>(
+                                child: Text(value,style: TextStyle(color: Color(0xff73737F)),),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _Model = value!;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 8,),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            hint: Text("Varient"),
+                            value: _Fuel,
+                            items: _List4.map((value) {
+                              return DropdownMenuItem<String>(
+                                child: Text(value,style: TextStyle(color: Color(0xff73737F)),),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _Fuel = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10,),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            hint: Text("Previous Insurer"),
+                            value: _Insurer,
+                            items: _List5.map((value) {
+                              return DropdownMenuItem<String>(
+                                child: Text(value,style: TextStyle(color: Color(0xff73737F)),),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _Insurer = value!;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 8,),
+                        Expanded(
+                          child: DropdownButtonFormField<String>(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            hint: Text("Claimed"),
+                            value: _Claimed,
+                            items: _List6.map((value) {
+                              return DropdownMenuItem<String>(
+                                child: Text(value,style: TextStyle(color: Color(0xff73737F)),),
+                                value: value,
+                              );
+                            }).toList(),
+                            onChanged: (String? value) {
+                              setState(() {
+                                _Claimed = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    SizedBox(height: 10,),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(15),
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                          border: OutlineInputBorder(),
+                          labelText: 'Reg. Date'),
+                      //   prefixIcon: Image.asset(
+                      //       'assets/image/india2.png', height: 50, width: 50),
+                    ),
+                    SizedBox(height: 10,),
+                    TextFormField(
+                      validator: (phone) {
+                        Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,}$)';
+                        RegExp regExp =
+                        new RegExp(r'(^(?:[+0]9)?[0-9]{10,}$)');
+                        if (phone!.length == 0) {
+                          return 'Please enter mobile number';
+                        } else if (!regExp.hasMatch(phone)) {
+                          return 'Please enter valid mobile number';
+                        }
+                        return null;
+                      },
+                      maxLength: 10,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        counterText: "",
+                        labelText: 'Mobile Number',
+                        hintText: 'Enter Mobile Number',
+                      ),
+
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      // Only numbers can be entered
+
+                    ),
+                    SizedBox(height: 10,),
+                    Text("Bought a New Bike!!",style: TextStyle(color: const Color(0xffFE8135)),),
+                    Container(
+                      height: 40,
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      child: TextButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                  (Set<MaterialState> states) => const Color(0xffFE8135),
+                            ),
+                            overlayColor: MaterialStateProperty.all(Colors.transparent),
+                            shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                )
+                            ),
+                          ),
+                          onPressed: () {
+                            print('pressed');
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Text(
+                              'VIEW QUOTES',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,),
+                              textAlign: TextAlign.center,
+                            ),
+                          )
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

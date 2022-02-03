@@ -1,0 +1,414 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Car form',
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
+      home: const MyHomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+
+  // Initial Selected Value
+  // String dropdownvalue = 'One Adult';
+  //
+  // String dropdownvalue1 = '1';
+
+
+  // // List of items in our dropdown menu
+  // var items = [
+  //   'One Adult',
+  //   'Two Adult',
+  // ];
+
+  // var items1 = [
+  //   'None',
+  //   '1',
+  //   '2',
+  //   '3',
+  // ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left:10.0),
+                  child: Text("Find Your Perfect",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: const Color(0xffFE8135)),),
+                ),
+                // DropdownButton(
+                //
+                //   // Initial Value
+                //   value: dropdownvalue,
+                //
+                //   // Down Arrow Icon
+                //   icon: const Icon(Icons.keyboard_arrow_down),
+                //
+                //   // Array list of items
+                //   items: items.map((String items) {
+                //     return DropdownMenuItem(
+                //       value: items,
+                //       child: Text(items,style: TextStyle(color: const Color(0xff73737F)),),
+                //     );
+                //   }).toList(),
+                //   // After selecting the desired option,it will
+                //   // change button value to selected value
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownvalue = newValue!;
+                //     });
+                //   },
+                //
+                // ),
+                 SizedBox(height: 10,),
+                Text("Term Plan",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: const Color(0xffFE8135)),),
+                // DropdownButton(
+
+                  // Initial Value
+                  // value: dropdownvalue1,
+                  //
+                  // // Down Arrow Icon
+                  // icon: Icon(Icons.keyboard_arrow_down),
+                  //
+                  // // Array list of items
+                  // items: items1.map((String items1) {
+                  //   return DropdownMenuItem(
+                  //     value: items1,
+                  //     child: Text(items1,style: TextStyle(color: const Color(0xff73737F))),
+                  //   );
+                  // }).toList(),
+                  // // After selecting the desired option,it will
+                  // // change button value to selected value
+                  // onChanged: (String? newValue) {
+                  //   setState(() {
+                  //     dropdownvalue1 = newValue!;
+                  //   });
+                  // },
+
+                // ),
+                SizedBox(height: 20,),
+
+                MyCustomForm(),
+
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Create a Form widget.
+class MyCustomForm extends StatefulWidget {
+  @override
+  MyCustomFormState createState() {
+    return MyCustomFormState();
+  }
+}
+// Create a corresponding State class. This class holds data related to the form.
+class MyCustomFormState extends State<MyCustomForm> {
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
+  final _formKey = GlobalKey<FormState>();
+  String? _Gender;
+
+  List _List = [
+    "Male",
+    "Female",
+  ];
+
+  String? _Smoke;
+
+  List _List1 = [
+    "No",
+    "Yes",
+  ];
+
+  String? _Income;
+
+  List _List2 = [ "2 Lakh", "3 Lakh ","4 Lakh ","5 Lakh ","6 Lakh ","7 Lakh ",
+    "8 Lakh ","9 Lakh ","10 Lakh ","11 Lakh ","12 Lakh ","13 Lakh ","14 Lakh ",
+    "15 Lakh ",
+
+  ];
+
+
+  String? _valScroll;
+
+  List _List3 = [ "18 Years", "19 Years","20 Years","21 Years","22 Years",
+    "23 Years","24 Years","25 Years","26 Years","27 Years","28 Years","29 Years",
+     "30 Years"
+  ];
+
+  TextEditingController _number = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    // Build a Form widget using the _formKey created above.
+    return Form(
+      key: _formKey,
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+
+          children: <Widget>[
+            // Text("ENTER YOUR DETAILS",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color: const Color(0xffFE8135)),),
+            // Container(
+            //   child: TextFormField(
+            //     decoration: InputDecoration(
+            //       border: OutlineInputBorder(),
+            //       labelText: 'Mobile No.',
+            //       hintText: 'Enter Mobile Number',
+            //     ),
+            //   ),
+            //
+            // ),
+            //   SizedBox(height: 10.0,),
+
+              Row(
+
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child:
+                     DropdownButtonFormField(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                        ),
+                        hint: Text("Age"),
+                        icon: Icon(Icons.keyboard_arrow_down),
+                        // underline: Container(
+                        //   height: 4,
+                        //   color: Colors.deepPurpleAccent,
+                        // ),
+                        value: _valScroll,
+                        items: List.generate(10, ( _List3){
+                          return DropdownMenuItem(
+                            child: Text(( _List3).toString()),
+                            value: ( _List3).toString(),
+                          );
+                        }),
+                        onChanged: (String? value) {
+                          setState(() {
+                            _valScroll = value;
+                          });
+                        },
+                      ),
+                    ),
+
+                  SizedBox(width:5.0,),
+                  Expanded(
+                    child: DropdownButtonFormField<String>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                      hint: Text("Do You Smoke?"),
+                      value: _Smoke,
+                      items: _List1.map((value) {
+                        return DropdownMenuItem<String>(
+                          child: Text(value,style: TextStyle(color: Color(0xff73737F)),),
+                          value: value,
+                        );
+                      }).toList(),
+                      onChanged: (String? value) {
+                        setState(() {
+                          _Smoke = value!;
+                        });
+                      },
+                    ),
+                  ),
+
+
+                ],
+
+
+              ),
+
+
+
+
+            SizedBox(height: 1.0,),
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child:Container(
+                margin: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    Text('Gender:',),
+                    SizedBox(width: 25,),
+                    Radio(
+                      value: 'Male',
+                      groupValue: _Gender,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _Gender = value!;
+                        });
+                      },
+                    ),
+                    Text('Male'),
+                    SizedBox(width: 25,),
+                    Radio(
+                      value: 'Female',
+                      groupValue: _Gender,
+                      onChanged: (String? value) {
+                        setState(() {
+                          _Gender = value!;
+                        });
+                      },
+                    ),
+                    Text('Female'),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 1,),
+            Row(
+              children: [
+                Expanded(
+                  child: DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    hint: Text("Income"),
+                    value: _Income,
+                    items: _List2.map((value) {
+                      return DropdownMenuItem<String>(
+                        child: Text(value,style: TextStyle(color: Color(0xff73737F)),),
+                        value: value,
+                      );
+                    }).toList(),
+                    onChanged: (String? value) {
+                      setState(() {
+                        _Income = value!;
+                      });
+                    },
+                  ),
+                ),
+
+                SizedBox(width:5,),
+                Expanded(
+                  child: TextFormField(
+                    validator: (phone) {
+                      Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,}$)';
+                      RegExp regExp =
+                      new RegExp(r'(^(?:[+0]9)?[0-9]{10,}$)');
+                      if (phone!.length == 0) {
+                        return 'Please enter Pincode';
+                      } else if (!regExp.hasMatch(phone)) {
+                        return 'Please enter valid Pincode';
+                      }
+                      return null;
+                    },
+                    maxLength: 6,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      counterText: "",
+                      labelText: 'Pincode',
+                      hintText: 'Enter Pincode',
+                    ),
+                    // maxLength: 6,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    // Only numbers can be entered
+
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 20,),
+            Container(
+              child: TextFormField(
+                validator: (phone) {
+                  Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,}$)';
+                  RegExp regExp =
+                  new RegExp(r'(^(?:[+0]9)?[0-9]{10,}$)');
+                  if (phone!.length == 0) {
+                    return 'Please enter mobile number';
+                  } else if (!regExp.hasMatch(phone)) {
+                    return 'Please enter valid mobile number';
+                  }
+                  return null;
+                },
+                maxLength: 10,
+                keyboardType: TextInputType.emailAddress,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  counterText: "",
+                  border: OutlineInputBorder(),
+                  labelText: 'Mobile',
+                  hintText: 'Enter Mobile No.',
+                ),
+                controller: _number,
+              ),
+
+            ),
+            SizedBox(height: 10),
+            //
+
+            Container(
+              height: 40,
+
+              margin: EdgeInsets.symmetric(vertical: 20),
+              child: TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                          (Set<MaterialState> states) => const Color(0xffFE8135),
+                    ),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        )
+                    ),
+                  ),
+                  onPressed: () {
+                    print('pressed');
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      'VIEW QUOTES',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.white,),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
